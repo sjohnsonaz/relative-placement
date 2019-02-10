@@ -37,7 +37,6 @@ export default class RoundView extends Component<IRoundViewProps> {
                         }
                         return headers;
                     })()}
-                    <th>Total</th>
                 </thead>
                 <tbody>
                     {round.sheets.map((sheet, index) => (
