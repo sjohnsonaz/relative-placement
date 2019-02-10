@@ -1,0 +1,13 @@
+.round-view {
+    border-collapse: collapse;
+}
+
+.round-view thead > th {
+    border-bottom: 1px solid #000;
+}
+
+.round-view th,
+.round-view td {
+    padding: 10px;
+    min-width: 30px;
+}
