@@ -7,9 +7,12 @@ export default class Round {
         this.sheets = sheets;
     }
 
-    sort() {
+    sort(places?: number) {
+        if (!places) {
+            places = this.sheets.length;
+        }
         for (let sheet of this.sheets) {
-            sheet.init();
+            sheet.init(places);
         }
         this.sheets.sort(Sheet.compare);
     }

@@ -4,7 +4,7 @@ export default class Sheet {
     competitorId: number | string | undefined;
     scores: number[];
     counts: number[] = [];
-    total!: number;
+    totals: number[] = [];
     rank!: number;
 
     constructor(
@@ -15,35 +15,37 @@ export default class Sheet {
         this.competitorId = competitorId;
     }
 
-    getTotal() {
-        let total = 0;
-        for (let score of this.scores) {
-            total += score;
-        }
-        return total;
-    }
-
-    getCount(score: number) {
-        let count = 0;
-        for (let value of this.scores) {
-            if (value <= score) {
-                count++;
+    getTotal(places: number) {
+        let totals = [];
+        for (let score = 1; score <= places; score++) {
+            let total = 0;
+            for (let value of this.scores) {
+                if (value <= score) {
+                    total += score;
+                }
             }
+            totals.push(total);
         }
-        return count;
+        return totals;
     }
 
-    getCounts() {
+    getCounts(places: number) {
         let counts = [];
-        for (let score = 1, length = this.scores.length + 1; score < length; score++) {
-            counts.push(this.getCount(score));
+        for (let score = 1; score <= places; score++) {
+            let count = 0;
+            for (let value of this.scores) {
+                if (value <= score) {
+                    count++;
+                }
+            }
+            counts.push(count);
         }
         return counts;
     }
 
-    init() {
-        this.counts = this.getCounts();
-        this.total = this.getTotal();
+    init(places: number) {
+        this.counts = this.getCounts(places);
+        this.totals = this.getTotal(places);
     }
 
     static compare(a: Sheet, b: Sheet) {
@@ -56,6 +58,8 @@ export default class Sheet {
         for (let index = 0, length = a.counts.length; index < length; index++) {
             let countA = a.counts[index];
             let countB = b.counts[index];
+            let totalA = a.totals[index];
+            let totalB = b.totals[index];
 
             if (countA >= majority) {
                 // Does A have majority
@@ -71,11 +75,11 @@ export default class Sheet {
                         // Does B have a bigger count
 
                         return 1;
-                    } else if (a.total < b.total) {
+                    } else if (totalA < totalB) {
                         // Does A have a smaller total
 
                         return -1;
-                    } else if (a.total > b.total) {
+                    } else if (totalA > totalB) {
                         // Does B have a smaller total
 
                         return 1;

@@ -32,7 +32,7 @@ export default class RoundView extends Component<IRoundViewProps> {
                     <th></th>
                     {(() => {
                         let headers = [];
-                        for (let index = 0; index < judgeCount; index++) {
+                        for (let index = 0; index < round.sheets.length; index++) {
                             headers.push(<th>1 - {index + 1}</th>);
                         }
                         return headers;
@@ -47,7 +47,6 @@ export default class RoundView extends Component<IRoundViewProps> {
                             {sheet.scores.map(score => <td>{score}</td>)}
                             <td></td>
                             {sheet.counts.map(count => <td>{count}</td>)}
-                            <td>{sheet.total}</td>
                         </tr>
                     ))}
                 </tbody>
